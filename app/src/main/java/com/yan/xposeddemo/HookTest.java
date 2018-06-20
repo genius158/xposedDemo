@@ -42,7 +42,7 @@ public class HookTest implements IXposedHookLoadPackage {
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) {
         if (PACKAGE_NAME.equals(lpparam.packageName)) {
             try {
-//                hook(lpparam);
+//                printMethod(lpparam);
 
                 //获取class类
                 Class c = XposedHelpers.findClass("tv.danmaku.bili.MainActivityV2", lpparam.classLoader);
@@ -137,7 +137,7 @@ public class HookTest implements IXposedHookLoadPackage {
         }
     }
 
-    public void hook(XC_LoadPackage.LoadPackageParam loadPackageParam) throws IOException, ClassNotFoundException {
+    public void printMethod(XC_LoadPackage.LoadPackageParam loadPackageParam) throws IOException, ClassNotFoundException {
         DexFile dexFile = new DexFile(loadPackageParam.appInfo.sourceDir);
         Enumeration<String> classNames = dexFile.entries();
         while (classNames.hasMoreElements()) {
