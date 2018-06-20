@@ -3,8 +3,10 @@ package com.yan.xposeddemo;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -63,25 +65,28 @@ public class HookTest implements IXposedHookLoadPackage {
                             printView(window.getDecorView());
                         }
 
-//                        Log.e("printView", "afterHookedMethod   " + view + "   " + view.getParent() + "   " + view.getParent().getParent() + "   " + view.getParent().getParent().getParent());
-//                        if (view == null) {
-//                            return;
-//                        }
-//                        Log.e("HookTest", "Method a: 1111111111");
-//                        Method performClick = getDeclaredMethod(view.getParent(), "callOnClick");
-//                        performClick.setAccessible(true);
-//                        performClick.invoke(view.getParent());
-//                        Log.e("HookTest", "Method a: 222222222");
+                        Log.e("printView", "afterHookedMethod   " + view + "   " + view.getParent() + "   " + view.getParent().getParent() + "   " + view.getParent().getParent().getParent() + "   " + view.getParent().getParent().getParent().getParent());
 
-                        Log.e("printView", "afterHookedMethod   " + viewPager);
+                        view = (View) view.getParent().getParent().getParent().getParent();
                         if (view == null) {
                             return;
                         }
                         Log.e("HookTest", "Method a: 1111111111");
-                        Method setCurrentItem = getDeclaredMethod(viewPager, "setCurrentItem", int.class);
-                        setCurrentItem.setAccessible(true);
-                        setCurrentItem.invoke(viewPager, 1);
+                        Method performClick = getDeclaredMethod(view, "dispatchTouchEvent", MotionEvent.class);
+                        performClick.setAccessible(true);
+                        performClick.invoke(view, MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, view.getWidth() * 3 / 8, 10, 0));
+                        performClick.invoke(view, MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, view.getWidth() * 3 / 8, 10, 0));
                         Log.e("HookTest", "Method a: 222222222");
+
+//                        Log.e("HookTest", "afterHookedMethod   " + viewPager);
+//                        if (viewPager == null) {
+//                            return;
+//                        }
+//                        Log.e("HookTest", "Method a: 1111111111");
+//                        Method setCurrentItem = getDeclaredMethod(viewPager, "setCurrentItem", int.class);
+//                        setCurrentItem.setAccessible(true);
+//                        setCurrentItem.invoke(viewPager, 1);
+//                        Log.e("HookTest", "Method a: 222222222");
                     }
                 }});
 
@@ -110,11 +115,13 @@ public class HookTest implements IXposedHookLoadPackage {
     }
 
     private void printView(View decorView) {
+        if (decorView instanceof ViewPager) {
+            viewPager = (ViewPager) decorView;
+        }
+
         Log.e("printView", "" + decorView);
         if (decorView instanceof ViewGroup) {
-            if (decorView instanceof ViewPager) {
-                viewPager = (ViewPager) decorView;
-            }
+
 
             for (int i = 0; i < ((ViewGroup) decorView).getChildCount(); i++) {
                 printView(((ViewGroup) decorView).getChildAt(i));
