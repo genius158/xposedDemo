@@ -17,7 +17,7 @@
             android:value="test"/>
         <meta-data
             android:name="xposedminversion"
-            android:value="82"/>
+            android:value="81"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
