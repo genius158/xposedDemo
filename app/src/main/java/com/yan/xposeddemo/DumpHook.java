@@ -20,13 +20,13 @@ public class DumpHook implements IXposedHookLoadPackage {
   String packagename;
 
   public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
-    initRefect();
-    packagename = "com.quvideo.xiaoying";
+    packagename = "com.wujie.chengxin";
     XposedBridge.log("设定包名：" + packagename);
     if ((!lpparam.packageName.equals(packagename)) || packagename == null) {
       XposedBridge.log("当前程序包名与设定不一致或者包名为空");
       return;
     }
+    initRefect();
     XposedBridge.log("目标包名：" + lpparam.packageName);
     String str = "java.lang.ClassLoader";
     String str2 = "loadClass";

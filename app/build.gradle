@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.yan.xposeddemo"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,9 +20,13 @@ android {
 
 dependencies {
     compileOnly fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'io.hexhacking:xunwind:1.0.3'
 
-    implementation"com.android.support:support-v4:26.1.0"
+    implementation "com.android.support:support-v4:28.0.0"
+    implementation "me.ele:uetool:1.2.9"
     compileOnly 'de.robv.android.xposed:api:81'
-  testImplementation 'junit:junit:4.12'
+//    implementation 'com.github.tiann:epic:0.11.2'
+    implementation 'com.github.tiann:FreeReflection:3.1.0'
+    testImplementation 'junit:junit:4.12'
     testImplementation 'junit:junit:4.12'
 }

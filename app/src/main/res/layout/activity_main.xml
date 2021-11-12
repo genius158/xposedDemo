@@ -11,4 +11,18 @@
         android:layout_height="wrap_content"
         android:text="Hello World!"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:text="MainActivity"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
